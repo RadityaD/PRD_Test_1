@@ -1,6 +1,7 @@
 package ralobh.prd_test_1;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -16,20 +19,25 @@ import java.util.Random;
 public class PRDactivity extends ActionBarActivity {
 
     Intent intent;
-    private static double K;
-    private static int isStarted = 0;
-    private static TextView prdtext;
-    private static int prdCounter = 0; // P(A) = C*N - prdCounter ini sama dengan N
-    private static int tryCounter = 0; // Berapa Kali Coba
-    private static Button tryprd;
-    private static Button restartprd;
-    private static Button doneprd;
+    public static double K;
+    public static int isStarted = 0;
+    public static TextView prdtext;
+    public static ScrollView scroll;
+    public static int prdCounter = 0; // P(A) = C*N - prdCounter ini sama dengan N
+    public static int tryCounter = 0; // Berapa Kali Coba
+    public static Button tryprd;
+    public static Button restartprd;
+    public static Button doneprd;
+    public static String pilihan;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prdactivity);
         intent = getIntent();
+        pilihan = intent.getExtras().getString("pil");
+        scroll = (ScrollView) findViewById(R.id.scrollView);
         isStarted = 0;
     }
 
@@ -55,10 +63,7 @@ public class PRDactivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void runPRD(View v){
-        String pilihan = intent.getExtras().getString("pil");
         switch(v.getId()){
             case R.id.tryprd_btn:
                 if(pilihan.equals("axehelix") && isStarted == 0)
@@ -81,6 +86,16 @@ public class PRDactivity extends ActionBarActivity {
                 doneprd.setEnabled(false);
                 break;
         }
+    }
+
+    public void scrollDown()
+    {
+        scroll.post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     public void initPRD(){
@@ -111,27 +126,38 @@ public class PRDactivity extends ActionBarActivity {
             proc = true;
             prdCounter = 1;
             tryCounter++;
+            /*
             currentText = prdtext.getText().toString();
             currentText += "\n" + "Proc";
             prdtext.setText(currentText);
+            prdtext.setSelected(true);*/
+            prdtext.append("\n"+"Proc");
+            scrollDown();
         }
         else if(rand.nextDouble() <= kons*(prdCounter))
         {
             proc = true;
             prdCounter = 1;
             tryCounter++;
+            /*
             currentText = prdtext.getText().toString();
             currentText += "\n" + "Proc";
             prdtext.setText(currentText);
+            prdtext.setSelected(true);*/
+            prdtext.append("\n"+"Proc");
+            scrollDown();
         }
         else
         {
             proc = false;
             prdCounter++;
             tryCounter++;
+            /*
             currentText = prdtext.getText().toString();
             currentText += "\n" + "noProc";
-            prdtext.setText(currentText);
+            prdtext.setText(currentText);*/
+            prdtext.append("\n"+"NoProc");
+            scrollDown();
         }
     }
 }
