@@ -17,16 +17,18 @@
         android:layout_alignParentEnd="false"
         android:ellipsize="end"
         android:scrollHorizontally="false"
-        android:fillViewport="false">
+        android:fillViewport="false"
+        android:layout_below="@+id/heroskillchance_txt">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_gravity="center|bottom"
+            android:layout_gravity="center|top"
             android:layout_alignParentBottom="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/prdView"
             android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:gravity="top"
             android:ellipsize="end"/>
     </ScrollView>
@@ -64,5 +66,33 @@
         android:layout_alignParentStart="true"
         android:enabled="false"
         android:onClick="runPRD"/>
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/heroSkill_img"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/heroskillname_txt"
+        android:layout_below="@+id/heroSkill_img"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/heroskillchance_txt"
+        android:layout_below="@+id/heroskillname_txt"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
 
 </RelativeLayout>

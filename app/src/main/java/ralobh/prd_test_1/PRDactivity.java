@@ -2,6 +2,7 @@ package ralobh.prd_test_1;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,21 +16,32 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-
-public class PRDactivity extends ActionBarActivity {
+public class PRDactivity extends ActionBarActivity{
 
     Intent intent;
-    public static double K;
-    public static int isStarted = 0;
-    public static TextView prdtext;
-    public static ScrollView scroll;
-    public static int prdCounter = 0; // P(A) = C*N - prdCounter ini sama dengan N
-    public static int tryCounter = 0; // Berapa Kali Coba
+
     public static Button tryprd;
     public static Button restartprd;
     public static Button doneprd;
+
+    public static double K;
+
+    public static int chance;
+    public static int isStarted;
+    public static int prdCounter; // P(A) = C*N - prdCounter ini sama dengan N
+    public static int tryCounter; // Berapa Kali Coba
+    public static int heroSkillImg;
+
+    public static ImageView heroSkill_img;
+
+    public static ScrollView scroll;
+
+    public static String skillName;
     public static String pilihan;
 
+    public static TextView prdtext;
+    public static TextView skillChance;
+    public static TextView skillNom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +50,12 @@ public class PRDactivity extends ActionBarActivity {
         intent = getIntent();
         pilihan = intent.getExtras().getString("pil");
         scroll = (ScrollView) findViewById(R.id.scrollView);
+
         isStarted = 0;
+        prdCounter = 0;
+        tryCounter = 0;
+
+        skillDetail();
     }
 
     @Override
@@ -61,6 +78,23 @@ public class PRDactivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void skillDetail(){
+        skillChance = (TextView) findViewById(R.id.heroskillchance_txt);
+        skillNom = (TextView) findViewById(R.id.heroskillname_txt);
+        heroSkill_img = (ImageView) findViewById(R.id.heroSkill_img);
+
+        if(pilihan.equals("axehelix"))
+        {
+            chance = 20;
+            skillName = "Axe's Counter Helix";
+            heroSkillImg = getResources().getIdentifier("axe_skill_counterhelix", "drawable", getPackageName());
+        }
+
+        skillChance.setText("Chance - "+chance+"%");
+        skillNom.setText(skillName);
+        heroSkill_img.setImageResource(heroSkillImg);
     }
 
     public void runPRD(View v){
