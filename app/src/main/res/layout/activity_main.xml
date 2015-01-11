@@ -16,4 +16,16 @@
         android:layout_alignParentEnd="true"
         android:onClick="toPRD"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2. Brewmaster&apos;s Drunken Brawler lvl 1"
+        android:id="@+id/select_btn2"
+        android:onClick="toPRD"
+        android:layout_below="@+id/select_btn1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/select_btn1"
+        android:layout_alignEnd="@+id/select_btn1" />
+
 </RelativeLayout>

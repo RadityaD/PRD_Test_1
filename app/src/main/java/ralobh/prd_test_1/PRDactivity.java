@@ -92,9 +92,17 @@ public class PRDactivity extends ActionBarActivity{
         if(pilihan.equals("axehelix"))
         {
             chance = 20;
-            skillName = "Axe's Counter Helix";
+            skillName = "Counter Helix";
             heroSkillImg = getResources().getIdentifier("axe_skill_counterhelix", "drawable", getPackageName());
             skillSound = MediaPlayer.create(this, R.raw.counter_helix);
+        }
+        else if(pilihan.equals("brew1"))
+        {
+            chance = 10;
+            skillName = "Drunken Brawler Level 1";
+            heroSkillImg = getResources().getIdentifier("brewmaster_drunken_brawler1", "drawable", getPackageName());
+            skillSound = MediaPlayer.create(this, R.raw.drunken_brawler);
+
         }
 
         skillChance.setText("Chance - "+chance+"%");
@@ -132,6 +140,11 @@ public class PRDactivity extends ActionBarActivity{
                 if(pilihan.equals("axehelix") && isStarted == 0)
                 {
                     K = 0.05570;
+                    initPRD();
+                }
+                else if(pilihan.equals("brew1") && isStarted == 0)
+                {
+                    K = 0.01475;
                     initPRD();
                 }
                 else

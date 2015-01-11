@@ -47,6 +47,9 @@ public class Main extends ActionBarActivity {
             case R.id.select_btn1:
                 pilihan = "axehelix";
                 break;
+            case R.id.select_btn2:
+                pilihan = "brew1";
+                break;
         }
         intent.putExtra("pil", pilihan);
         startActivity(intent);
