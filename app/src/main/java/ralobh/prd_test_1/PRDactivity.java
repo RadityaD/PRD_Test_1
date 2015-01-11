@@ -1,9 +1,8 @@
 package ralobh.prd_test_1;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
-import android.provider.SyncStateContract;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +14,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Random;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class PRDactivity extends ActionBarActivity{
 
@@ -34,6 +35,8 @@ public class PRDactivity extends ActionBarActivity{
 
     public static ImageView heroSkill_img;
 
+    private static MediaPlayer skillSound;
+
     public static ScrollView scroll;
 
     public static String skillName;
@@ -52,9 +55,10 @@ public class PRDactivity extends ActionBarActivity{
         scroll = (ScrollView) findViewById(R.id.scrollView);
 
         isStarted = 0;
-        prdCounter = 0;
+        prdCounter = 1;
         tryCounter = 0;
 
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         skillDetail();
     }
 
@@ -90,12 +94,37 @@ public class PRDactivity extends ActionBarActivity{
             chance = 20;
             skillName = "Axe's Counter Helix";
             heroSkillImg = getResources().getIdentifier("axe_skill_counterhelix", "drawable", getPackageName());
+            skillSound = MediaPlayer.create(this, R.raw.counter_helix);
         }
 
         skillChance.setText("Chance - "+chance+"%");
         skillNom.setText(skillName);
         heroSkill_img.setImageResource(heroSkillImg);
     }
+
+    public void skillAudio(){
+        skillSound.start();
+    }
+
+    public void waitInBetween(){
+        if(tryprd.getText().equals("Try"))
+        {
+            tryprd.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tryprd.setEnabled(false);
+                }
+            }, 0);
+
+            tryprd.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tryprd.setEnabled(true);
+                }
+            }, 1000);
+        }
+    }
+
 
     public void runPRD(View v){
         switch(v.getId()){
@@ -151,7 +180,6 @@ public class PRDactivity extends ActionBarActivity{
 
     public void thePRD(double kons) {
         Random rand = new Random();
-        String currentText;
         boolean proc = false; //Nandain Klo proc atau ga
 
 
@@ -160,38 +188,36 @@ public class PRDactivity extends ActionBarActivity{
             proc = true;
             prdCounter = 1;
             tryCounter++;
-            /*
-            currentText = prdtext.getText().toString();
-            currentText += "\n" + "Proc";
-            prdtext.setText(currentText);
-            prdtext.setSelected(true);*/
+
             prdtext.append("\n"+"Proc");
+            skillAudio();
             scrollDown();
+            //tryprd.setEnabled(false);
+            waitInBetween();
         }
         else if(rand.nextDouble() <= kons*(prdCounter))
         {
             proc = true;
             prdCounter = 1;
             tryCounter++;
-            /*
-            currentText = prdtext.getText().toString();
-            currentText += "\n" + "Proc";
-            prdtext.setText(currentText);
-            prdtext.setSelected(true);*/
+
             prdtext.append("\n"+"Proc");
+            skillAudio();
             scrollDown();
+            //tryprd.setEnabled(false);
+            waitInBetween();
+
         }
         else
         {
             proc = false;
             prdCounter++;
             tryCounter++;
-            /*
-            currentText = prdtext.getText().toString();
-            currentText += "\n" + "noProc";
-            prdtext.setText(currentText);*/
+
             prdtext.append("\n"+"NoProc");
             scrollDown();
+            //tryprd.setEnabled(false);
+            waitInBetween();
         }
     }
 }
