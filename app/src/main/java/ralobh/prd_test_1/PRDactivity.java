@@ -1,10 +1,13 @@
 package ralobh.prd_test_1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +32,7 @@ public class PRDactivity extends ActionBarActivity{
 
     public static int chance;
     public static int isStarted;
+    public static int procCounter;
     public static int prdCounter; // P(A) = C*N - prdCounter ini sama dengan N
     public static int tryCounter; // Berapa Kali Coba
     public static int heroSkillImg;
@@ -57,6 +61,7 @@ public class PRDactivity extends ActionBarActivity{
         isStarted = 0;
         prdCounter = 1;
         tryCounter = 0;
+        procCounter = 0;
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         skillDetail();
@@ -150,6 +155,7 @@ public class PRDactivity extends ActionBarActivity{
                 if(isStarted == 0)
                 {
                     initPRD();
+                    thePRD(K);
                 }
                 else
                 {
@@ -164,6 +170,7 @@ public class PRDactivity extends ActionBarActivity{
                 tryprd.setText("start");
                 restartprd.setEnabled(false);
                 doneprd.setEnabled(false);
+                doneStats();
                 break;
         }
     }
@@ -176,6 +183,31 @@ public class PRDactivity extends ActionBarActivity{
                 scroll.fullScroll(View.FOCUS_DOWN);
             }
         });
+    }
+
+    public void doneStats()
+    {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.showstats, null);
+
+        dialogBuilder.setTitle("Your Statistic");
+        dialogBuilder.setView(dialogView)
+        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        TextView jmlProc = (TextView) dialogView.findViewById(R.id.procC);
+        TextView jmlTry = (TextView) dialogView.findViewById(R.id.tryC);
+
+        AlertDialog showStat = dialogBuilder.create();
+        jmlProc.setText("Proc - "+procCounter);
+        jmlTry.setText("Try - "+tryCounter);
+        showStat.show();
     }
 
     public void initPRD(){
@@ -191,8 +223,8 @@ public class PRDactivity extends ActionBarActivity{
 
         prdCounter = 1;
         tryCounter = 0;
+        procCounter = 0;
         isStarted = 1;
-        thePRD(K);
     }
 
     public void thePRD(double kons) {
@@ -205,11 +237,11 @@ public class PRDactivity extends ActionBarActivity{
             proc = true;
             prdCounter = 1;
             tryCounter++;
+            procCounter++;
 
             prdtext.append("\n"+"Proc");
             skillAudio();
             scrollDown();
-            //tryprd.setEnabled(false);
             waitInBetween();
         }
         else if(rand.nextDouble() <= kons*(prdCounter))
@@ -217,11 +249,11 @@ public class PRDactivity extends ActionBarActivity{
             proc = true;
             prdCounter = 1;
             tryCounter++;
+            procCounter++;
 
             prdtext.append("\n"+"Proc");
             skillAudio();
             scrollDown();
-            //tryprd.setEnabled(false);
             waitInBetween();
 
         }
@@ -233,7 +265,6 @@ public class PRDactivity extends ActionBarActivity{
 
             prdtext.append("\n"+"NoProc");
             scrollDown();
-            //tryprd.setEnabled(false);
             waitInBetween();
         }
     }
