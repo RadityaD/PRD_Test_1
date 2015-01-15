@@ -50,6 +50,9 @@ public class Main extends ActionBarActivity {
             case R.id.select_btn2:
                 pilihan = "brew1";
                 break;
+            case R.id.select_btn3:
+                pilihan = "coupdegrace";
+                break;
         }
         intent.putExtra("pil", pilihan);
         startActivity(intent);
